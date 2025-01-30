@@ -1,0 +1,3 @@
+/home/laxamana/captain_sonar/CMakeFiles/sonar.dir
+/home/laxamana/captain_sonar/CMakeFiles/edit_cache.dir
+/home/laxamana/captain_sonar/CMakeFiles/rebuild_cache.dir

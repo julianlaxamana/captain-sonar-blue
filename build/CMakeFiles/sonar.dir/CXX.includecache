@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wkerney/CSCI/homework/captain_sonar/main.cc
+map.h
+/home/wkerney/CSCI/homework/captain_sonar/map.h
+
+/home/wkerney/CSCI/homework/captain_sonar/map.h
+move.h
+/home/wkerney/CSCI/homework/captain_sonar/move.h
+splash.h
+/home/wkerney/CSCI/homework/captain_sonar/splash.h
+
+/home/wkerney/CSCI/homework/captain_sonar/move.h
+
+/home/wkerney/CSCI/homework/captain_sonar/splash.h
+iostream
+-
+vector
+-
+cstdlib
+-
+cctype
+-
+
