@@ -7,9 +7,8 @@ Laxamana: SDL
 Eggert: Game Logic  
 Surin: Threading
 
-========================================
-		  Captain Sonar v2.0
-========================================
+
+## Captain Sonar v2.0
 
 For this assignment, ADTify Captain Sonar.
 
