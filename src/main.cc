@@ -1,5 +1,6 @@
 #include "../include/map.h"
 #include "../include/submarine.h"
+
 using namespace std;
 
 //This function will pause the game until the user hits a key and then enter
@@ -122,7 +123,7 @@ int main() {
 				clear_error();
 				continue;
 			}
-			if (choice < 1 or choice > 6) {
+			if (choice < 1 || choice > 6) {
 				cout << "Invalid choice. Try again.\n";
 				continue;
 			}
@@ -270,7 +271,7 @@ int main() {
 						continue;
 					}
 					choice--; //Adjust for the submarines starting at 1 not 0
-					if (choice < 0 or choice >= subs.size()) {
+					if (choice < 0 || choice >= subs.size()) {
 						cout << "Invalid choice, please try again.\n";
 						continue;
 					}
