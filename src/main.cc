@@ -33,6 +33,7 @@ int main() {
 	clear_screen();  //Clear the screen
 	splash_screen(); //Display the splash screen
 
+  cout << "Hello World" << endl;
 	//Phase 1 - Setup
 	cout << "How many people are playing? Minimum 2, Maximum 6:\n";
 	int players = 2;
