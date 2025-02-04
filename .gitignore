@@ -44,3 +44,7 @@ CMakeUserPresets.json
 *.exe
 *.out
 *.app
+
+#Visual Studio
+build/out
+.vs
