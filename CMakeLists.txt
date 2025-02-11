@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /build)
 # This is a single line comment
 project(CAPTAIN_SONAR VERSION 1.0.0 LANGUAGES C CXX)
-add_executable(sonar ../src/main.cc)
+add_executable(sonar src/main.cc)
 #target_link_libraries(sonar PRIVATE ncurses)
 add_subdirectory(lib/SDL EXCLUDE_FROM_ALL)
 target_link_libraries(sonar PRIVATE SDL3::SDL3)
