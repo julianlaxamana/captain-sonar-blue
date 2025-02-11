@@ -1,5 +1,6 @@
 #include "../include/map.h"
 #include "../include/submarine.h"
+#include <boost/asio.hpp>
 using namespace std;
 
 //This function will pause the game until the user hits a key and then enter
