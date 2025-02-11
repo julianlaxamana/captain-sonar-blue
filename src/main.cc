@@ -15,8 +15,8 @@ void clear_screen() {
 }
 
 //Thus function will quit the game with an error message
-void die() {
-	cout << "Invalid input!\n";
+void die(string message = "Invalid input!\n") {
+	cout << message;
 	exit(EXIT_FAILURE);
 }
 
@@ -26,8 +26,6 @@ void clear_error() {
 	string s;
 	cin >> s;
 }
-
-
 
 int main() {
 	clear_screen();  //Clear the screen
@@ -54,8 +52,8 @@ int main() {
 		if (!cin) die();
 		if (!check_map(starting_location)) die(); //They picked a spot on land our outside the map
 		cout << "Starting location accepted.\n";
-		subs.at(i).set_location(starting_location); //Save the location 
-		subs.at(i).add_location(starting_location); //First entry in the history
+		subs.at(i).set_location(starting_location); // Set the starting location
+		subs.at(i).add_history(starting_location); // Add the starting location to the history
 		pause();
 		clear_screen();
 	}
@@ -101,8 +99,8 @@ int main() {
 				continue;
 			}
 			cout << "New location accepted.\n";
-			subs.at(current_player).set_location(new_location); //Update location 
-			subs.at(current_player).add_location(new_location); //Add it to the history
+			subs.at(current_player).set_location(new_location); // Set the new location
+			subs.at(current_player).add_history(new_location); // Add the new location to the history
 			break;
 		}
 		//Second they can take an action
@@ -173,7 +171,7 @@ int main() {
 							if (dist == 0)      damage = 75; //Direct hit
 							else if (dist == 1) damage = 50; //One away
 							else if (dist == 2) damage = 25; //Two away
-							subs.at(i).add_health(-damage);
+							subs.at(i).set_health(subs.at(i).get_health() - damage);
 							cout << damage << " inflicted!\n";
 							if (subs.at(i).get_health() <= 0) {
 								if (current_player == i) {
@@ -188,7 +186,7 @@ int main() {
 						}
 					}
 					if (hits == 0) cout << "MISSED!\n";
-					subs.at(current_player).add_torpedoes(-1);
+					subs.at(current_player).set_torpedoes(subs.at(current_player).get_torpedoes() - 1);
 					break;
 				}
 			}
@@ -219,12 +217,12 @@ int main() {
 						}
 					}
 					if (hits == 0) cout << "NO SUBS DETECTED!\n";
-					subs.at(current_player).add_sensors(-1);
+					subs.at(current_player).set_sensors(subs.at(current_player).get_sensors() - 1);
 					break;
 				}
 			}
 			else if (choice == 3) { //DOUBLE MOVE
-				subs.at(current_player).add_health(-10); //Damages the sub to move fast
+				subs.at(current_player).set_health(subs.at(current_player).get_health() - 10); //Damages the sub to move fast
 				//Move their sub
 				while (true) {
 					cout << "Please enter your move (it must be within one square horizontal and vertical):\n";
@@ -245,8 +243,8 @@ int main() {
 						continue;
 					}
 					cout << "New location accepted.\n";
-					subs.at(current_player).set_location(new_location); //Update location
-					subs.at(current_player).add_location(new_location); //Add it to the history
+					subs.at(current_player).set_location(new_location); // 	Set the new location
+					subs.at(current_player).add_history(new_location); // Add the new location to the history
 					break;
 				}
 
@@ -257,7 +255,9 @@ int main() {
 				cout << "Resupplied to full torpedoes and sensors!\n";
 			}
 			else if (choice == 5) {
-				subs.at(current_player).add_health(10);
+				subs.at(current_player).set_health(subs.at(current_player).get_health() + 10);
+				if (subs.at(current_player).get_health() > Submarine::MAX_HEALTH)
+					subs.at(current_player).set_health(Submarine::MAX_HEALTH);
 				cout << "Repaired to " << subs.at(current_player).get_health() << " health!\n";
 			}
 			else if (choice == 6) {

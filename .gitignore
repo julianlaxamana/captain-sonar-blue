@@ -44,3 +44,4 @@ CMakeUserPresets.json
 *.exe
 *.out
 *.app
+sonar
