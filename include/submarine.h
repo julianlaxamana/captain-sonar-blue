@@ -3,7 +3,10 @@
 #include <vector>
 #include <iostream>
 
-void die();
+void die(std::string message = "Invalid input!\n") {
+	cout << message;
+	exit(EXIT_FAILURE);
+}
 
 //PODS style class
 class Submarine {

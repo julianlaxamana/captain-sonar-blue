@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.14)
 project(CAPTAIN_SONAR VERSION 1.0.0 LANGUAGES C CXX)
 
 find_package(Boost REQUIRED COMPONENTS system)
+find_package(Curses REQUIRED)
 
 # Common dependencies
 add_library(common_lib INTERFACE)
@@ -22,5 +23,5 @@ add_executable(server src/server.cc)
 target_link_libraries(server PRIVATE common_lib)
 
 # Client
-add_executable(server src/server.cc)
+add_executable(client src/client.cc)
 target_link_libraries(server PRIVATE common_lib)
