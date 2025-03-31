@@ -25,9 +25,9 @@ Renderer::~Renderer() {
 	SDL_DestroyWindow(window);
 }
 
-int Renderer::createTexture(std::string path) {
+int Renderer::createTexture(std::string path, double scale) {
     // Create Texture
-        Texture* texture = new Texture(path, renderer);
+        Texture* texture = new Texture(path, renderer, scale);
 
         // Add Texture to vector
         textures.push_back(texture);
@@ -46,19 +46,93 @@ void Renderer::render() {
 
     SDL_RenderPresent(renderer);
 }
-void Renderer::drawTexture(int index, double x1, double x2, double y1, double y2) {
+void Renderer::clear() {
     SDL_RenderClear(renderer);
+
+}
+void Renderer::drawTexture(int index, double x, double y, double scale, int flags) {
     SDL_FRect rect;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);  /* blue, full alpha */
 
     int windowHeight;
     int windowWidth;
     SDL_GetWindowSize(window, &windowWidth, &windowHeight);
-    rect.x = (x1) * windowWidth;
-    rect.y = y1 * windowHeight;
-    rect.w = (x2 - x1) * windowWidth;
-    rect.h = (y2 - y1) * windowHeight;
+
+    
+    double xScale = windowWidth / 800.0;
+    double yScale = windowHeight / 600.0;
+    double scaleR = (xScale + yScale) / 2.0;
+    if (flags & CENTER_V) {
+        rect.y = y * windowHeight - ((scale)*textures.at(index)->getHeight() * scaleR * textures.at(index)->getScale()) / 2;
+        rect.h = (scale)*textures.at(index)->getHeight() * scaleR * textures.at(index)->getScale();
+    }
+    else {
+        rect.y = y * windowHeight;
+        rect.h = (scale)*textures.at(index)->getHeight() * scaleR * textures.at(index)->getScale();
+    }
+
+    if (flags & CENTER_H) {
+        rect.x = (x)*windowWidth - (scale)*textures.at(index)->getWidth() * scaleR * textures.at(index)->getScale() / 2;
+        rect.w = (scale)*textures.at(index)->getWidth() * scaleR * textures.at(index)->getScale();
+    }
+    else {
+        rect.x = (x)*windowWidth;
+        rect.w = (scale)*textures.at(index)->getWidth() * scaleR * textures.at(index)->getScale();
+    }
 
     //SDL_RenderFillRect(renderer, &rect);
     SDL_RenderTexture(renderer, textures.at(index)->getTexture(), NULL, &rect);
 }
+
+bool Renderer::drawButton(int index, double x, double y, double scale, int flags) {
+    this->drawTexture(index, x, y, scale, flags);
+
+    SDL_FRect rect;
+    int windowHeight;
+    int windowWidth;
+    SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+
+    double xScale = windowWidth / 800.0;
+    double yScale = windowHeight / 600.0;
+    double scaleR = (xScale + yScale) / 2.0;
+    if (flags & CENTER_V) {
+        rect.y = y * windowHeight - ((scale)*textures.at(index)->getHeight() * scaleR * textures.at(index)->getScale()) / 2;
+        rect.h = (scale)*textures.at(index)->getHeight() * scaleR * textures.at(index)->getScale();
+    }
+    else {
+        rect.y = y * windowHeight;
+        rect.h = (scale)*textures.at(index)->getHeight() * scaleR * textures.at(index)->getScale();
+    }
+
+    if (flags & CENTER_H) {
+        rect.x = (x)*windowWidth - (scale)*textures.at(index)->getWidth() * scaleR * textures.at(index)->getScale() / 2;
+        rect.w = (scale)*textures.at(index)->getWidth() * scaleR * textures.at(index)->getScale();
+    }
+    else {
+        rect.x = (x)*windowWidth;
+        rect.w = (scale)*textures.at(index)->getWidth() * scaleR * textures.at(index)->getScale();
+    }
+
+    float mouseX, mouseY;
+    int mouseState = SDL_GetMouseState(&mouseX, &mouseY);
+
+    static bool prevClick = false;
+    static bool prevRelease = false;
+    
+    if ((mouseState & 1) && (mouseX > rect.x && mouseX < rect.x + rect.w && mouseY > rect.y && mouseY < rect.y + rect.h) && !prevClick) {
+        prevClick = true;
+        prevRelease = true;
+        return false;
+    }
+    else if (prevRelease && !prevClick) { return true; }
+
+    if (mouseState & 1) prevClick = true;
+    else prevClick = false;
+
+    return false;
+
+}
+
+SDL_Window* Renderer::getWindow() const { return window; }
+SDL_Renderer* Renderer::getRenderer() const { return renderer; }
+Texture* Renderer::getTexture(int index) const { return textures.at(index); }

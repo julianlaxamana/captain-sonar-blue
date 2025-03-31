@@ -7,7 +7,7 @@ include_directories(
     include
 )
 
-add_library(renderer STATIC include/renderer.cc include/texture.cc)
+add_library(renderer STATIC include/renderer.cc include/texture.cc include/button.cc)
 
 add_subdirectory(lib/SDL STATIC)
 
