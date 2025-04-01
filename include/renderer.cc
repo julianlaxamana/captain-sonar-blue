@@ -84,6 +84,45 @@ void Renderer::drawTexture(int index, double x, double y, double scale, int flag
     SDL_RenderTexture(renderer, textures.at(index)->getTexture(), NULL, &rect);
 }
 
+void Renderer::drawText(std::string text, Font& font, SDL_Color color, double x, double y, double scale, int flags) {
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font.getFont(), text.c_str(), text.size(), color);
+    SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+
+    SDL_FRect rect;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);  /* blue, full alpha */
+
+    int windowHeight;
+    int windowWidth;
+    SDL_GetWindowSize(window, &windowWidth, &windowHeight);
+
+
+    double xScale = windowWidth / 800.0;
+    double yScale = windowHeight / 600.0;
+    double scaleR = (xScale + yScale) / 2.0;
+    if (flags & CENTER_V) {
+        rect.y = y * windowHeight - ((scale)*surfaceMessage->h * scaleR) / 2;
+        rect.h = (scale)*surfaceMessage->h * scaleR ;
+    }
+    else {
+        rect.y = y * windowHeight;
+        rect.h = (scale)*surfaceMessage->h * scaleR ;
+    }
+
+    if (flags & CENTER_H) {
+        rect.x = (x)*windowWidth - (scale)*surfaceMessage->w * scaleR / 2;
+        rect.w = (scale)*surfaceMessage->w * scaleR;
+    }
+    else {
+        rect.x = (x)*windowWidth;
+        rect.w = (scale)*surfaceMessage->w * scaleR ;
+    }
+
+    SDL_RenderTexture(renderer, Message, NULL, &rect);
+
+    SDL_DestroySurface(surfaceMessage);
+    SDL_DestroyTexture(Message);
+}
+
 bool Renderer::drawButton(int index, double x, double y, double scale, int flags) {
     this->drawTexture(index, x, y, scale, flags);
 

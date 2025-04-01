@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <texture.h>
+#include <font.h>
 #include <string>
 #include <vector>
 
@@ -14,11 +15,12 @@ class Renderer {
 		~Renderer();
 
 		int createTexture(std::string path, double scale = 1.0);
-		void drawTexture(int index, double x, double y, double scale, int flags = 0);
+		void drawTexture(int index, double x, double y, double scale = 1.0, int flags = 0);
+		void drawText(std::string text, Font &font, SDL_Color color, double x, double y, double scale = 1.0, int flags = 0);
 		void render();
 		void clear();
 
-		bool drawButton(int index, double x, double y, double scale, int flags = 0);
+		bool drawButton(int index, double x, double y, double scale = 1.0, int flags = 0);
 
 		SDL_Window* getWindow() const;
 		SDL_Renderer* getRenderer() const;

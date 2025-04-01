@@ -7,12 +7,20 @@ include_directories(
     include
 )
 
-add_library(renderer STATIC include/renderer.cc include/texture.cc include/button.cc)
+add_library(renderer STATIC include/renderer.cc include/texture.cc include/button.cc include/font.cc)
 
-add_subdirectory(lib/SDL STATIC)
+add_subdirectory(lib/SDL)
+add_subdirectory(lib/SDL_ttf )
 
 #target_link_libraries(sonar PRIVATE ncurses)
 target_link_libraries(renderer PRIVATE SDL3::SDL3)
+target_link_libraries(renderer PRIVATE SDL3_ttf::SDL3_ttf)
+
 target_link_libraries(sonar PRIVATE renderer)
+target_link_libraries(sonar PRIVATE harfbuzz)
 target_link_libraries(sonar PRIVATE SDL3::SDL3)
+target_link_libraries(sonar PRIVATE SDL3_ttf::SDL3_ttf)
+
+SET(GCC_COVERAGE_LINK_FLAGS "-DSDLTTF_VENDORED=OFF")
+SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 
