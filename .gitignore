@@ -11,6 +11,10 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+build/lib
+build/sonar
+out/build
+build/CMakeSettings.json
 
 # Prerequisites
 *.d
@@ -44,3 +48,7 @@ CMakeUserPresets.json
 *.exe
 *.out
 *.app
+
+#Visual Studio
+build/out
+.vs

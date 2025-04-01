@@ -1,7 +1,7 @@
 #pragma once
 #include "move.h"
 #include "splash.h"
-
+#include <iso646.h>
 const char RESUPPLY = '*';
 const char REPAIR = '.';
 const char PLAYER = 'X';
@@ -37,7 +37,7 @@ void print_map(Move cur = {}) {
 	int column = 2+cur.column, row = cur.row-'A'+3; //Adjust the offsets in the map so the coordinates line up
 	for (int i = 0; i < ireland.size(); i++) {
 		for (int j = 0; j < ireland.at(i).size(); j++) {
-			if (cur.row != '@' and i == row and j == column) cout << PLAYER;
+			if (cur.row != '@' && i == row && j == column) cout << PLAYER;
 			else cout << ireland.at(i).at(j);
 		}
 		cout << endl;
