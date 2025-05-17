@@ -12,6 +12,8 @@ public:
 private:
 	int textureIndex;
 	Renderer* renderer;
+	bool prevClick = false;
+	bool prevRelease = false;
 
 
 

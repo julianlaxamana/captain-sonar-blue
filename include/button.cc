@@ -37,8 +37,6 @@ bool Button::render(double x, double y, double scale, int flags) {
     float mouseX, mouseY;
     int mouseState = SDL_GetMouseState(&mouseX, &mouseY);
 
-    static bool prevClick = false;
-    static bool prevRelease = false;
 
     if ((mouseState & 1) && (mouseX > rect.x && mouseX < rect.x + rect.w && mouseY > rect.y && mouseY < rect.y + rect.h) && !prevClick) {
         prevClick = true;
